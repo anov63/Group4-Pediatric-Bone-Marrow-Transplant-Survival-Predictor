@@ -21,9 +21,9 @@ jobs:
         pip install -r requirements.txt
     
    # - name: Check syntax for all scripts
-    #  run: |
-     #   python -m py_compile src/train_model.py
-      #  python -m py_compile src/data_processing.py
+     # run: |
+       # python -m py_compile src/train_model.py
+       # python -m py_compile src/data_processing.py
        # python -m py_compile src/evaluate_model.py
-        #python -m py_compile src/utils.py
-        python -m py_compile app/app.py
+       # python -m py_compile src/utils.py
+       # python -m py_compile app/app.py
