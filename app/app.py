@@ -108,8 +108,13 @@ st.markdown("Predict the survival status of pediatric patients after a bone marr
 def load_model(model_path):
     return joblib.load(model_path)
 
-project_root = Path(__file__).resolve().parent.parent
-models_dir = project_root / 'models'
+# --- SMART PATH ROUTING ---
+current_path = Path(__file__).resolve()
+models_dir = Path('models') # Fallback
+for parent in [current_path.parent, current_path.parent.parent]:
+    if (parent / 'models').exists():
+        models_dir = parent / 'models'
+        break
 
 models_info = {
     'XGBoost': models_dir / 'xgboost_model.pkl',
@@ -315,6 +320,6 @@ if st.button("🔍 Predict Survival Status", type="primary", use_container_width
                             
                         except Exception as e:
                             st.error(f"Could not generate SHAP explanation: {e}")
-                
+            
         except Exception as e:
             st.error(f"Prediction failed: {e}")
