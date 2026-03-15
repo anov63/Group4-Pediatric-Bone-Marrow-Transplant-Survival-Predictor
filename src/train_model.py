@@ -140,16 +140,25 @@ class ModelTrainer:
         pipeline = Pipeline([
             ('imputer', SimpleImputer(strategy='median')),
             ('scaler', StandardScaler()),
-            ('clf', SVC(kernel='rbf', probability=True, random_state=42))
+            ('clf', SVC(probability=True, random_state=42))
         ])
 
         param_grid = {
-            'clf__C': [0.1, 1.0, 10.0],
-            'clf__gamma': ['scale', 'auto'],
+            'clf__kernel': ['rbf', 'linear'],
+            'clf__C': [0.01, 0.1, 1.0, 10.0],
+            'clf__gamma': ['scale', 'auto', 0.1],
+            'clf__class_weight': ['balanced']
         }
 
         cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-        search = GridSearchCV(pipeline, param_grid, cv=cv, scoring='roc_auc', n_jobs=-1, refit=True)
+        search = GridSearchCV(
+            pipeline, 
+            param_grid, 
+            cv=cv, 
+            scoring='balanced_accuracy', 
+            n_jobs=-1, 
+            refit=True
+        )
         search.fit(self.X_dev, self.y_dev)
 
         best_pipeline = search.best_estimator_
@@ -161,7 +170,6 @@ class ModelTrainer:
         self._evaluate_and_save('SVM', best_pipeline, y_pred, y_pred_proba)
 
         joblib.dump(best_pipeline, self.models_dir / 'modele_svm_bmt.pkl')
-
     def train_random_forest(self):
         self.logger.info("Training Random Forest with 5-Fold CV on development set...")
 
