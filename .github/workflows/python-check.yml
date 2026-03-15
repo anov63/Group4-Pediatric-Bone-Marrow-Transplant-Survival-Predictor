@@ -30,5 +30,7 @@ jobs:
         python -m py_compile app/app.py
 
     - name: Run Automated Tests
+      env:
+        PYTHONPATH: .
       run: |
-        pytest -v
+        python -m pytest -v
