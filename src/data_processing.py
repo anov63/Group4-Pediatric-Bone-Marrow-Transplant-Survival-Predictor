@@ -9,7 +9,7 @@ from src.utils import get_logger
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.append(str(PROJECT_ROOT))
-logger = get_logger(_name_)
+logger = get_logger(__name__)
 def analyze_distributions(df: pd.DataFrame):
     """
     Analyzes skewness of numerical features to justify log transformations.
