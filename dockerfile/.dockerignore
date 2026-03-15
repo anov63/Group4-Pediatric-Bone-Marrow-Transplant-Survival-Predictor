@@ -1,0 +1,10 @@
+src/
+tests/
+data/
+pytest.ini
+.pytest_cache/
+bone_marrow_pipeline.ipynb
+.git/
+.gitignore
+__pycache__/
+*.pyc
