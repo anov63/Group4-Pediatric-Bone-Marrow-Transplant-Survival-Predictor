@@ -1155,7 +1155,7 @@ if st.session_state.step == 4 and st.session_state.prediction_run:
                     except Exception as e:
                         st.warning(f"⚠️ SHAP Feature Impact could not be generated. Error: {e}")
 
-                if clean_probability < 0.50:
+                if clean_probability > 0.50:
                     st.markdown("<hr style='border-color: #2a1f22; margin: 40px 0;'>", unsafe_allow_html=True)
                     st.markdown(f"""
                         <h3 style="color: #ffffff; margin-bottom: 8px; font-size: 22px;">
